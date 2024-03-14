@@ -4,6 +4,8 @@ import path from 'path';
 import axios from 'axios'
 import schedule from 'node-schedule'
 import { writeToNotion } from '../functions/writeToNotion.js';
+import moment from 'moment'
+
 
 
 export async function modmeToken() {
@@ -46,8 +48,17 @@ schedule.scheduleJob('0 */4 * * *', async () => {
 })
 
 schedule.scheduleJob('*/10 * * * *', async () => {
-    writeToNotion()
+    writeToNotion(moment().utcOffset('+05:00').format('YYYY-MM-DD'))
 })
+
+const desiredTimeUTC = moment().utcOffset('+05:00').set({ hour: 0, minute: 10, second: 0 });
+const cronExpression = `${desiredTimeUTC.minutes()} ${desiredTimeUTC.hours()} * * *`;
+
+schedule.scheduleJob(cronExpression, async () => {
+    writeToNotion(moment().utcOffset('+05:00').subtract(1, 'days').format('YYYY-MM-DD'))
+})
+
+
 
 
 

@@ -1,13 +1,12 @@
 import axios from "axios";
 import 'dotenv/config.js'
-import mt from 'moment'
 import { getModmeInforms } from "./getModmeInforms.js";
 import { createPageNotion } from "./createPageNotion.js";
 
 
-export const writeToNotion = async () => {
+export const writeToNotion = async (date) => {
     try {
-        let dateLocal = mt(Date.now()).format('YYYY-MM-DD');
+        let dateLocal = date;
         const modInforms = await getModmeInforms(dateLocal);
         const pageId = await createPageNotion(dateLocal)
         let { Cash, UZCARD, Payme, Click, Uzum, Humo } = modInforms.all
