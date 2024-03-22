@@ -27,7 +27,6 @@ export const writeToNotion = async (date) => {
             }
         })
     } catch (error) {
-        console.log(error)
         axios.post(
             `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`,
             {
