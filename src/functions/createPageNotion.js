@@ -1,5 +1,6 @@
 import axios from 'axios';
 import 'dotenv/config.js'
+import moment from 'moment';
 
 export const createPageNotion = async (date) => {
     try {
@@ -26,7 +27,16 @@ export const createPageNotion = async (date) => {
                         date: {
                             start: date
                         }
-                    }
+                    },
+                    "Name": {
+                        "title": [
+                            {
+                                "text": {
+                                    "content": moment(date).format('DD.MM.YYYY')
+                                }
+                            }
+                        ]
+                    },
                 }
             }, {
                 headers: {

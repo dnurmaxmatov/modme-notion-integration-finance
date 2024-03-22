@@ -17,6 +17,7 @@ export const getModmeInforms = async (date) => {
             }
         )
 
+        console.log(informs.data);
         return informs.data
 
     } catch (error) {

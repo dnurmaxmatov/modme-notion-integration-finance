@@ -9,15 +9,16 @@ export const writeToNotion = async (date) => {
         let dateLocal = date;
         const modInforms = await getModmeInforms(dateLocal);
         const pageId = await createPageNotion(dateLocal)
-        let { Cash, UZCARD, Payme, Click, Uzum, Humo } = modInforms.all
+        let { Cash, UZCARD, Payme, Click, Uzum, UzumBank, Humo } = modInforms.all
         await axios.patch(`https://api.notion.com/v1/pages/${pageId}`, {
             properties: {
                 Click: { "number": Click.totals },
                 Humo: { "number": Humo.totals },
-                Income: { "number": Cash.totals },
+                "Naqd pul kirimi": { "number": Cash.totals },
                 Uzcard: { "number": UZCARD.totals },
-                Uzum: { "number": Uzum.totals },
-                Payme: { "number": Payme.totals }
+                Uzum: { "number": Uzum.totals + UzumBank.totals },
+                Payme: { "number": Payme.totals },
+                "Pul ko'chirish": { "number": modInforms.all["Bank account"].totals }
             }
         }, {
             headers: {
@@ -26,7 +27,7 @@ export const writeToNotion = async (date) => {
             }
         })
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
         axios.post(
             `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`,
             {

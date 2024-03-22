@@ -43,11 +43,11 @@ export async function modmeToken() {
 }
 
 
-schedule.scheduleJob('0 */4 * * *', async () => {
+schedule.scheduleJob('*/1 * * * *', async () => {
     modmeToken()
 })
 
-schedule.scheduleJob('*/10 * * * *', async () => {
+schedule.scheduleJob('*/2 * * * *', async () => {
     writeToNotion(moment().utcOffset('+05:00').format('YYYY-MM-DD'))
 })
 
